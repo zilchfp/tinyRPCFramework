@@ -18,7 +18,6 @@ public class Server {
     public void register( String className,Object remoteObject) {
         remoteObjects.put( className, remoteObjects);
         System.out.println("className: "+ className + " regested");
-
     }
     public void service() throws Exception {
         // 创建基于流的Socket,并在8000 端口监听
@@ -29,6 +28,7 @@ public class Server {
         ObjectInputStream ois = new ObjectInputStream(in);
         OutputStream out = socket.getOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(out);
+
         //接收客户发送的Call 对象
         System.out.println("接收客户发送的Call对象");
         RemoteCall remotecallobj = (RemoteCall) ois.readObject();
@@ -38,6 +38,7 @@ public class Server {
         remotecallobj = invoke(remotecallobj);
         // 向客户发送包含了执行结果的remotecallobj 对象
         oos.writeObject(remotecallobj);
+
         ois.close();
         oos.close();
         socket.close();

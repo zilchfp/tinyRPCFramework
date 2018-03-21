@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+//远程调用
 public class RemoteCall implements Serializable {
     private String className;//表示类名或接口名
     private  String methodName;  // 表示方法名
