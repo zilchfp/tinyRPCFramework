@@ -1,6 +1,8 @@
 package cyc.RPC.Framework;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class RemoteCall implements Serializable {
     private String className;//表示类名或接口名
@@ -17,11 +19,24 @@ public class RemoteCall implements Serializable {
         this.params = params;
     }
 
-    public String call(){
-        System.out.println( "Call successfully");
-        return "Call successfully";
+    public void call(){
+        try {
+            Class c = Class.forName("cyc.RPC.Framework." + className);
+            Object o = c.newInstance();
+            Method method = c.getMethod(methodName, paramTypes);
+            method.invoke(o,params);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
-
 
     public String getClassName() {
         return className;

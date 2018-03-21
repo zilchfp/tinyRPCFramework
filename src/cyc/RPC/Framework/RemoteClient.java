@@ -16,9 +16,9 @@ public class RemoteClient {
         ObjectInputStream ois = new ObjectInputStream(in);
         System.out.println("remoteCLient Started....");
 
-        RemoteCall call = new RemoteCall("RPCService", "getInformation", new Class[]{String.class}, new Object[]{"测试 RPC！"});// 向服务器发送Call 对象
+        RemoteCall call = new RemoteCall("RPCServiceImpl", "getInformation", new Class[]{String.class}, new Object[]{"测试 RPC！"});// 向服务器发送Call 对象
         oos.writeObject(call);
-        //接收包含了方法执行结果的Call 对象
+        //接收包含了方法执行结果的Call对象
         call = (RemoteCall) ois.readObject();
         call.call();
         //System.out.println(call.call());

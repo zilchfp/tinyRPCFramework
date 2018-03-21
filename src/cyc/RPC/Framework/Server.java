@@ -16,7 +16,8 @@ public class Server {
 
     //注册服务：把一个远程对象放到缓存中
     public void register( String className,Object remoteObject) {
-        remoteObjects.put( className,remoteObjects);
+        remoteObjects.put( className, remoteObjects);
+        System.out.println("className: "+ className + " regested");
 
     }
     public void service() throws Exception {
@@ -29,9 +30,11 @@ public class Server {
         OutputStream out = socket.getOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(out);
         //接收客户发送的Call 对象
+        System.out.println("接收客户发送的Call对象");
         RemoteCall remotecallobj = (RemoteCall) ois.readObject();
         System.out.println(remotecallobj);
         // 调用相关对象的方法
+        System.out.println("调用相关对象的方法");
         remotecallobj = invoke(remotecallobj);
         // 向客户发送包含了执行结果的remotecallobj 对象
         oos.writeObject(remotecallobj);
@@ -51,6 +54,7 @@ public class Server {
             Method method = classType.getMethod(methodName, paramTypes);
             // 从缓存中取出相关的远程对象Object
             Object remoteObject = remoteObjects.get(className);
+            System.out.println("class name: "+className);
             if (remoteObject == null) {
                 throw new Exception(className + " 的远程对象不存在");
             } else {
