@@ -10,7 +10,7 @@ public class RemoteCall implements Serializable {
     private  String methodName;  // 表示方法名
     private Class[] paramTypes;//表示方法参数类型
     private Object[] params;//表示方法参数值/如果方法正常执行，则resul 为方法返回值，如果方法抛出异常，则resul 为该异常
-    private static Object result;
+    private  Object result;
 
     public RemoteCall() {}
     public RemoteCall (String className , String methodName, Class[]paramTypes, Object[] params) {
@@ -71,11 +71,11 @@ public class RemoteCall implements Serializable {
         this.params = params;
     }
 
-    public static Object getResult() {
+    public Object getResult() {
         return result;
     }
 
-    public static void setResult(Object result) {
-        RemoteCall.result = result;
+    public void setResult(Object result) {
+        this.result = result;
     }
 }

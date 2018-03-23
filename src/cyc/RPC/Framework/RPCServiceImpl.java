@@ -1,5 +1,9 @@
 package cyc.RPC.Framework;
 
+interface RPCService {
+    public String getInformation(String s);
+
+}
 
 public class RPCServiceImpl implements  RPCService {
     @Override
@@ -8,3 +12,4 @@ public class RPCServiceImpl implements  RPCService {
         return ("收到发来的信息："+s);
     }
 }
+
