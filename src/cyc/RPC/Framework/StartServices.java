@@ -13,7 +13,7 @@ public class StartServices {
         while (true) {
             Socket socket = serverSocket.accept();
             RemoteServicesHandler remoteServicesHandler = new RemoteServicesHandler(socket);
-            remoteServicesHandler.register(" RPCServiceImp2", new RPCServiceImpl());
+            remoteServicesHandler.register("RPCServiceImp", new RPCServiceImp());
             new Thread(remoteServicesHandler).start();
         }
     }

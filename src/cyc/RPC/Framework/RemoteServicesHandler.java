@@ -2,7 +2,6 @@ package cyc.RPC.Framework;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +14,7 @@ public class RemoteServicesHandler implements Runnable {
     private ObjectOutputStream oos ;
     private InputStream in ;
 
-    RemoteServicesHandler(Socket socket) throws IOException {
+    public RemoteServicesHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.in = socket.getInputStream();
         this.ois = new ObjectInputStream(in);
@@ -23,12 +22,12 @@ public class RemoteServicesHandler implements Runnable {
         this.oos = new ObjectOutputStream(out);
     }
     public void register( String className,Object remoteObject) {
-        remoteObjects.put( className, remoteObjects);
+        remoteObjects.put(className, remoteObject);
         System.out.println("className: "+ className + " regested");
     }
     @Override
     public void run() {
-        System.out.println(" 服务器启动......");
+        System.out.println(" 服务启动......");
         try {
             //接收客户发送的Call 对象
             RemoteCall remotecallobj = (RemoteCall) ois.readObject();
@@ -55,7 +54,7 @@ public class RemoteServicesHandler implements Runnable {
             String className = call.getClassName();
             String methodName = call.getMethodName();
             Object[] params = call.getParams();
-            Class classType = Class.forName(className);
+            Class classType = Class.forName("cyc.RPC.Framework."+className);
             Class[] paramTypes = call.getParamTypes();
             Method method = classType.getMethod(methodName, paramTypes);
             // 从缓存中取出相关的远程对象Object
