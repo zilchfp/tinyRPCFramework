@@ -21,12 +21,14 @@ public class RemoteCall implements Serializable {
     }
 
 
-    public void call(){
+    public Object call(){
+        Method method;
+        Object result = null;
         try {
-            Class c = Class.forName("cyc.RPC.Framework." + className);
+            Class c = Class.forName("Bank.Server." + className);
             Object o = c.newInstance();
-            Method method = c.getMethod(methodName, paramTypes);
-            method.invoke(o, params);
+            method = c.getMethod(methodName, paramTypes);
+            result =  method.invoke(o, params);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -38,6 +40,7 @@ public class RemoteCall implements Serializable {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     public String getClassName() {

@@ -10,9 +10,6 @@ public class StartServices {
     public static void main( String args[ ]) throws Exception {
         ServerSocket serverSocket = new ServerSocket(8000);
         System.out.println("Server started...");
-        //开启注册服务监听端口
-        //ServicesRegister.run();
-
 
         while (true) {
             System.out.println(" 开启请求服务监听端口");

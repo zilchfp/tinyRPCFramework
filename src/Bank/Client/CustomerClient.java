@@ -1,4 +1,4 @@
-package Bank;
+package Bank.Client;
 
 import cyc.RPC.Framework.RemoteCall;
 
@@ -13,7 +13,7 @@ public class CustomerClient {
     InputStream in;
     ObjectInputStream ois;
     Socket socket;
-    CustomerClient() throws IOException {
+    public CustomerClient() throws IOException {
         this.host = "127.0.0.1";
         this.portNumber = 8000;
         this.socket= new Socket(host, portNumber);
@@ -30,16 +30,6 @@ public class CustomerClient {
     }
     public void invoke(String className , String methodName, Class[]paramTypes, Object[] params) throws Exception {
         RemoteCall call = new RemoteCall(className, methodName, paramTypes, params);
-        oos.writeObject(call);
-        //接收包含了方法执行结果的Call对象
-        call = (RemoteCall) ois.readObject();
-        call.call();
-        this.close();
-    }
-
-    public void invoke() throws Exception {
-        RemoteCall call = new RemoteCall("RPCServiceImp", "getInformation",
-                new Class[]{String.class}, new Object[]{"测试 RPC！"});// 向服务器发送Call 对象
         oos.writeObject(call);
         //接收包含了方法执行结果的Call对象
         call = (RemoteCall) ois.readObject();

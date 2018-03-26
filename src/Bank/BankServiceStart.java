@@ -1,5 +1,8 @@
 package Bank;
 
+import Bank.Server.Account;
+import Bank.Server.BankService;
+import Bank.Server.CustomerAccount;
 import cyc.RPC.Framework.RPCServiceImp;
 import cyc.RPC.Framework.RemoteServicesHandler;
 
@@ -9,11 +12,12 @@ public class BankServiceStart {
     public static void main(String args[ ]) throws Exception {
         BankService bankService = new BankService();
         bankService.initialie();
+        bankService.registerAllServices("RPCServiceImp", new RPCServiceImp());
+        bankService.registerAllServices("CustomerAccount", new CustomerAccount());
 
         while (true) {
             Socket socket = bankService.getAcceptSocket();
             RemoteServicesHandler remoteServicesHandler = new RemoteServicesHandler(socket);
-            remoteServicesHandler.register("RPCServiceImp", new RPCServiceImp());
             new Thread(remoteServicesHandler).start();
         }
     }

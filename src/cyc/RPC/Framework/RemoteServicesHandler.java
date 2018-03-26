@@ -1,20 +1,22 @@
 package cyc.RPC.Framework;
 
+import Bank.Server.RemoteObjectsSingleton;
+
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RemoteServicesHandler implements Runnable {
     private Socket socket;
-    private Map remoteObjects = new HashMap();
+    private Map remoteObjects;
     private ObjectInputStream ois ;
     private OutputStream out ;
     private ObjectOutputStream oos ;
     private InputStream in ;
 
     public RemoteServicesHandler(Socket socket) throws IOException {
+        this.remoteObjects = RemoteObjectsSingleton.getInstance();
         this.socket = socket;
         this.in = socket.getInputStream();
         this.ois = new ObjectInputStream(in);
