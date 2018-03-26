@@ -1,9 +1,6 @@
 package cyc.RPC.Framework;
 
-interface RPCService {
-    public String getInformation(String s);
 
-}
 
 public class RPCServiceImp implements  RPCService {
     @Override

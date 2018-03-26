@@ -34,13 +34,16 @@ public class CustomerClient {
         //接收包含了方法执行结果的Call对象
         call = (RemoteCall) ois.readObject();
         call.call();
+        this.close();
     }
 
     public void invoke() throws Exception {
-        RemoteCall call = new RemoteCall("RPCServiceImp", "getInformation", new Class[]{String.class}, new Object[]{"测试 RPC！"});// 向服务器发送Call 对象
+        RemoteCall call = new RemoteCall("RPCServiceImp", "getInformation",
+                new Class[]{String.class}, new Object[]{"测试 RPC！"});// 向服务器发送Call 对象
         oos.writeObject(call);
         //接收包含了方法执行结果的Call对象
         call = (RemoteCall) ois.readObject();
         call.call();
+        this.close();
     }
 }
