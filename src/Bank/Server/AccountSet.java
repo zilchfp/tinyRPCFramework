@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AccountSet {
-    private static Map AccountMap;
+    private static Map<String, Account> AccountMap;
     private AccountSet(){}
     public static synchronized  Map getInstance() {
         if (AccountMap == null) {
@@ -14,14 +14,8 @@ public class AccountSet {
         }
         return AccountMap;
     }
-    public static boolean addAccount(Account account) {
-        AccountMap.put(account.getName(), account.getPassword());
-        boolean addResult;
-        if (AccountMap.get(account.getName()) == null) {
-            addResult = false;
-        } else {
-            addResult = true;
-        }
-        return addResult;
+
+    public static Account getAccount(String username) {
+        return (Account) getInstance().get(username);
     }
 }

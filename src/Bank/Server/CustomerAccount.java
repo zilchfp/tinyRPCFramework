@@ -1,32 +1,83 @@
 package Bank.Server;
 
+import Bank.Client.ServicesInterface;
+
 import java.util.Map;
 
-public class CustomerAccount {
+public class CustomerAccount implements ServicesInterface {
     private Account account;
-    private Integer balance;
+    private static Map<String, Account> accountSet = AccountSet.getInstance();
 
-    public static boolean Login(String usrname, String password) {
-        Map accountSet = AccountSet.getInstance();
-        accountSet.put("1","1");
-        String targetPassword = (String)accountSet.get(usrname);
-        if (targetPassword.equals(password)) {
-            return true;
+    @Override
+    public boolean Login(String usrname, String password) {
+        boolean loginResult;
+        Account testAccount = new Account("1","1");
+        accountSet.put("1",testAccount);
+        updateAccountSet(testAccount);
+        Account loginingAccount = (Account) accountSet.get(usrname);
+        String targetPassword = loginingAccount.getPassword();
+        loginResult = targetPassword.equals(password);
+        if (loginResult) {
+            this.account = loginingAccount;
         } else {
-            return false;
+            this.account = null;
         }
+        return loginResult;
+    }
+
+    @Override
+    public double queryBalance() {
+        return account.getBalance();
+    }
+
+    @Override
+    public boolean checkAccountExist(String username) {
+        Map accountSet = AccountSet.getInstance();
+        return !(accountSet.get(username) == null);
     }
 
     public CustomerAccount() {
-
-        this.balance = 0;
-
     }
 
-    public boolean deposit (int credit) {
-        this.balance += credit;
-        System.out.println("balance: "+balance);
+    @Override
+    public boolean deposit(String username, double money) {
+        checkAccountSet();
+        Account account = (Account) accountSet.get(username);
+        if (account == null) {
+            System.out.println("找不到账户："+username);
+        } else {
+            account.setBalance(account.getBalance() + money);
+            System.out.println("存入： "+money);
+            return true;
+        }
+        return  false;
+    }
+
+    @Override
+    public boolean withdraw(String username, double money) {
+        Account account = (Account) accountSet.get(username);
+        if (money > account.getBalance()) return false;
+        account.setBalance(account.getBalance() - money);
+        updateAccountSet(account);
+        System.out.println("取出: "+money);
         return true;
     }
 
+    @Override
+    public boolean transfer(String username, double money) {
+
+
+        return false;
+    }
+
+    private void updateAccountSet(Account account) {
+        accountSet.put(account.getName() ,account);
+    }
+    private void checkAccountSet() {
+        System.out.println("此时AccountSet里有：");
+        for (Account entry : accountSet.values()) {
+            System.out.println(entry.getName() + "  " + entry.getBalance());
+        }
+        System.out.println();
+    }
 }

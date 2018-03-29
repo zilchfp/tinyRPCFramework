@@ -10,6 +10,7 @@ import java.net.Socket;
 
 public class BankServiceStart {
     public static void main(String args[ ]) throws Exception {
+        /*
         BankService bankService = new BankService();
         bankService.initialie();
         bankService.registerAllServices("RPCServiceImp", new RPCServiceImp());
@@ -20,5 +21,9 @@ public class BankServiceStart {
             RemoteServicesHandler remoteServicesHandler = new RemoteServicesHandler(socket);
             new Thread(remoteServicesHandler).start();
         }
+*/
+
+        RPCFramework.export(new CustomerAccount(), 8000);
+
     }
 }
