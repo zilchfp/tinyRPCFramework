@@ -47,6 +47,7 @@ public class BankCustomerGUI {
             if (servicesInterface.withdraw(loginUsername, money)) {
                 System.out.println("取款成功！成功取出："+money+"元。");
                 withdrawSuccessfully = true;
+                queryBalance();
             } else {
                 System.out.println("取款失败！账户余额不足！");
                 withdrawSuccessfully = false;
@@ -70,6 +71,7 @@ public class BankCustomerGUI {
             if (servicesInterface.deposit(loginUsername, money)) {
                 System.out.println("存款成功！成功存入："+money+"元");
                 depositSuccessfully = true;
+                queryBalance();
             } else {
                 System.out.println("存款失败！请确保输入合法金额！请重试！");
                 depositSuccessfully = false;
@@ -105,21 +107,25 @@ public class BankCustomerGUI {
             System.out.println("请输入您要转入的金额：（单位：元）");
             money = scanner.readLine();
             moneyValid =  checkValid(money);
-            if (!moneyValid) {
-                System.out.println("您输入的金额不合法，请重试！");
-            } else {
+            if (moneyValid) {
                 break;
+            } else {
+                System.out.println("您输入的金额不合法，请重试！");
             }
         }
 
         if (servicesInterface.withdraw(loginUsername, Double.parseDouble(money))) {
-            System.out.println("您输入的金额不合法，请重试！");
+            if (servicesInterface.deposit(targetUsername, Double.parseDouble(money))) {
+                System.out.println("转账成功！");
+                queryBalance();
+            } else {
+                System.out.println("转账错误！无法存入目标账户！请重试！");
+                //回滚取款操作
+                servicesInterface.deposit(loginUsername, Double.parseDouble(money));
+            }
         } else {
-            System.out.println("转账错误，请重试！");
+            System.out.println("转账错误，无法从账户转出金额！请重试！");
         }
-
-
-
 
     }
 

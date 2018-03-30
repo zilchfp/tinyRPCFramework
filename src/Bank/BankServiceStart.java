@@ -24,6 +24,5 @@ public class BankServiceStart {
 */
 
         RPCFramework.export(new CustomerAccount(), 8000);
-
     }
 }

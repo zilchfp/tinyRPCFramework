@@ -11,9 +11,7 @@ public class CustomerAccount implements ServicesInterface {
     @Override
     public boolean Login(String usrname, String password) {
         boolean loginResult;
-        Account testAccount = new Account("1","1");
-        accountSet.put("1",testAccount);
-        updateAccountSet(testAccount);
+        addTestAccount();
         Account loginingAccount = (Account) accountSet.get(usrname);
         String targetPassword = loginingAccount.getPassword();
         loginResult = targetPassword.equals(password);
@@ -41,7 +39,7 @@ public class CustomerAccount implements ServicesInterface {
 
     @Override
     public boolean deposit(String username, double money) {
-        checkAccountSet();
+        //checkAccountSet();
         Account account = (Account) accountSet.get(username);
         if (account == null) {
             System.out.println("找不到账户："+username);
@@ -79,5 +77,12 @@ public class CustomerAccount implements ServicesInterface {
             System.out.println(entry.getName() + "  " + entry.getBalance());
         }
         System.out.println();
+    }
+
+    private void addTestAccount(){
+        Account testAccount = new Account("1","1");
+        accountSet.put("1",testAccount);
+        accountSet.put("2", new Account("2","2"));
+        updateAccountSet(testAccount);
     }
 }
