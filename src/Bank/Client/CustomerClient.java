@@ -1,10 +1,9 @@
 package Bank.Client;
 
 import Bank.RPCFramework;
-import cyc.RPC.Framework.RemoteCall;
+import Bank.ServicesInterface;
 
 import java.io.*;
-import java.net.Socket;
 
 public class CustomerClient {
     private ServicesInterface servicesInterface;
@@ -15,7 +14,6 @@ public class CustomerClient {
         GUI.login();
         int operation;
         do {
-
             System.out.println("*******************************************************");
             System.out.println("请选择需要进行的操作序号：");
             System.out.println("1.存款");

@@ -1,7 +1,5 @@
 package cyc.RPC.Framework;
 
-import Bank.Server.RemoteObjectsSingleton;
-
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.Socket;

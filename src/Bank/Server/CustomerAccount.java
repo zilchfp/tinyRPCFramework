@@ -1,17 +1,15 @@
 package Bank.Server;
 
-import Bank.Client.ServicesInterface;
-
+import Bank.ServicesInterface;
 import java.util.Map;
 
 public class CustomerAccount implements ServicesInterface {
-    private Account account;
+    private static Account account;
     private static Map<String, Account> accountSet = AccountSet.getInstance();
 
     @Override
     public boolean Login(String usrname, String password) {
         boolean loginResult;
-        addTestAccount();
         Account loginingAccount = (Account) accountSet.get(usrname);
         String targetPassword = loginingAccount.getPassword();
         loginResult = targetPassword.equals(password);
@@ -20,11 +18,14 @@ public class CustomerAccount implements ServicesInterface {
         } else {
             this.account = null;
         }
+        System.out.println("login chekc....");
+        checkAccountSet();
         return loginResult;
     }
 
     @Override
     public double queryBalance() {
+        checkAccountSet();
         return account.getBalance();
     }
 
@@ -35,11 +36,11 @@ public class CustomerAccount implements ServicesInterface {
     }
 
     public CustomerAccount() {
+        addTestAccount();
     }
 
     @Override
     public boolean deposit(String username, double money) {
-        //checkAccountSet();
         Account account = (Account) accountSet.get(username);
         if (account == null) {
             System.out.println("找不到账户："+username);
@@ -63,8 +64,6 @@ public class CustomerAccount implements ServicesInterface {
 
     @Override
     public boolean transfer(String username, double money) {
-
-
         return false;
     }
 

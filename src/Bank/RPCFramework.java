@@ -123,15 +123,6 @@ public class RPCFramework {
                                 } else {
                                     return result;
                                 }
-                                /*
-                                if ((boolean)result) {
-                                    System.out.println("result is true");
-                                } else {
-                                    System.out.println("result is false");
-                                }
-                                System.out.println(result);
-                                return result;
-                                */
                             } finally {
                                 input.close();
                             }

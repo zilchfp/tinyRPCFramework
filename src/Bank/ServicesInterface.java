@@ -1,4 +1,4 @@
-package Bank.Client;
+package Bank;
 
 public interface ServicesInterface {
     public boolean Login(String username, String password);

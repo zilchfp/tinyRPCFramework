@@ -1,9 +1,10 @@
 package Bank.Server;
 
 public class Account {
-    String name;
-    String password;
-    double balance;
+    private String name;
+    private  String password;
+    private double balance;
+
     public Account(){}
     public Account(String name, String password) {
         this.name = name;
