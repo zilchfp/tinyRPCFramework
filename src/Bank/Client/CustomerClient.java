@@ -1,15 +1,23 @@
 package Bank.Client;
 
 import Bank.RPCFramework;
+import Bank.RemoteServicesInterface;
 import Bank.ServicesInterface;
 
 import java.io.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class CustomerClient {
-    private ServicesInterface servicesInterface;
+    //private ServicesInterface servicesInterface;
+    private RemoteServicesInterface servicesInterface;
 
     public void run() throws Exception {
-        servicesInterface = RPCFramework.refer(ServicesInterface.class, "127.0.0.1",8000);
+        Registry registry = LocateRegistry.getRegistry("localhost");
+        RemoteServicesInterface BankServices = (RemoteServicesInterface) registry.lookup( "BankServices");
+        servicesInterface = BankServices;
+        //servicesInterface = RPCFramework.refer(ServicesInterface.class, "127.0.0.1",8000);
+
         BankCustomerGUI GUI = new BankCustomerGUI(servicesInterface);
         GUI.login();
         int operation;

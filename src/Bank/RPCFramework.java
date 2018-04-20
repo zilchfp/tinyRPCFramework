@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 //reference： https://www.jianshu.com/p/bb9beca7f7bc
 
 public class RPCFramework {
+    //固定线程池大小：20
         private static ExecutorService executorService = Executors.newFixedThreadPool(20);
 
         public static Socket socket;

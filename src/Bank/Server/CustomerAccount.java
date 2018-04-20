@@ -1,9 +1,12 @@
 package Bank.Server;
 
+import Bank.RemoteServicesInterface;
 import Bank.ServicesInterface;
+
+import java.rmi.RemoteException;
 import java.util.Map;
 
-public class CustomerAccount implements ServicesInterface {
+public class CustomerAccount implements RemoteServicesInterface {
     private static Account account;
     private static Map<String, Account> accountSet = AccountSet.getInstance();
 
@@ -33,6 +36,11 @@ public class CustomerAccount implements ServicesInterface {
     public boolean checkAccountExist(String username) {
         Map accountSet = AccountSet.getInstance();
         return !(accountSet.get(username) == null);
+    }
+
+    @Override
+    public String sayHello() throws RemoteException {
+        return "Hello Word!";
     }
 
     public CustomerAccount() {

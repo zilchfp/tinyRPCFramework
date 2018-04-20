@@ -1,15 +1,17 @@
 package Bank.Client;
 
+import Bank.RemoteServicesInterface;
 import Bank.ServicesInterface;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.RemoteException;
 
 public class BankCustomerGUI {
-    private ServicesInterface servicesInterface;
+    private RemoteServicesInterface servicesInterface;
     private String loginUsername;
-    public BankCustomerGUI(ServicesInterface servicesInterface) {
+    public BankCustomerGUI(RemoteServicesInterface servicesInterface) {
         this.servicesInterface = servicesInterface;
     }
 
@@ -35,6 +37,7 @@ public class BankCustomerGUI {
     public void withdraw() throws IOException {
         boolean withdrawSuccessfully = false;
         BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
+        queryBalance();
         while (!withdrawSuccessfully) {
             System.out.println("请输入您要取出的金额：(单位：元)");
             String input = scanner.readLine();
@@ -82,7 +85,7 @@ public class BankCustomerGUI {
     }
 
 
-    public void queryBalance() {
+    public void queryBalance() throws RemoteException {
         double balance = servicesInterface.queryBalance();
         System.out.println("您当前的账户余额为："+balance+"元");
     }
